@@ -6,4 +6,6 @@
 
 ### 🔸 Working with Express.js
 
+### 🔸 Wording with Dynamic Content - ejs / pug
+
 ---
