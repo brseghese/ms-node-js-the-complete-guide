@@ -8,4 +8,6 @@
 
 ### 🔸 Working with Dynamic Content - ejs / pug
 
+### 🔸 The Model View Controller - MVC
+
 ---
