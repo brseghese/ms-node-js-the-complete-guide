@@ -4,11 +4,9 @@
 
   <body>
     <%- include('../includes/navigation.ejs') %>
-
       <main>
         <% if (prods.length> 0) { %>
           <div class="grid">
-
             <% for (let product of prods) { %>
               <article class="card product-item">
                 <header class="card__header">
@@ -27,18 +25,14 @@
                   </p>
                 </div>
                 <div class="card__actions">
-                  <form action="/add-to-cart" method="POST">
-                    <button class="btn">Add to Cart</button>
-                  </form>
+                  <a href="/products/<%= product.id %>" class="btn">Details</a>
+                  <%- include('../includes/add-to-cart.ejs', {product}) %>
                 </div>
               </article>
               <% } %>
-
           </div>
-
           <% } else { %>
             <h1>No Products Found!</h1>
             <% } %>
-
       </main>
       <%- include('../includes/end.ejs') %>
