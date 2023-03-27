@@ -10,4 +10,8 @@
 
 ### 🔸 The Model View Controller - MVC
 
+### 🔸 Dynamic Routes and Advanced Models
+
+### 🔸 Working with NoSQL & MongoDB
+
 ---
