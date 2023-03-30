@@ -18,16 +18,8 @@
 
 .cart__item h1,
 .cart__item h2 {
-  /* margin-right: 1rem; */
+  margin-right: 1rem;
   font-size: 1.2rem;
   margin: 0;
 }
 
-.cart__item h1 {
-  margin-right: auto;
-}
-
-.cart__item h2 {
-  margin-left: 1rem;
-  margin-right: 25%;
-}

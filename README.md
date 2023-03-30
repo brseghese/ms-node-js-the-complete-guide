@@ -10,10 +10,12 @@
 
 ### 🔸 The Model View Controller - MVC
 
-### 🔸 Dynamic Routes and Advanced Models
+### 🔸 Dynamic Routes & Advanced Models
 
 ### 🔸 Working with NoSQL & MongoDB
 
 ### 🔸 Working with Mongoose
+
+### 🔸 Sessions & Cookies
 
 ---

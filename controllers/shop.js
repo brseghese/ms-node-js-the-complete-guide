@@ -5,9 +5,10 @@ exports.getProducts = (req, res, next) => {
   Product.find()
     .then((products) => {
       res.render('shop/product-list', {
-        products,
+        prods: products,
         pageTitle: 'All Products',
         path: '/products',
+        isAuthenticated: req.session.isLoggedIn,
       });
     })
     .catch((err) => {
@@ -23,6 +24,7 @@ exports.getProduct = (req, res, next) => {
         product,
         pageTitle: product.title,
         path: '/products',
+        isAuthenticated: req.session.isLoggedIn,
       });
     })
     .catch((err) => console.log(err));
@@ -33,9 +35,10 @@ exports.getIndex = (req, res, next) => {
     .then((products) => {
       // console.log(products);
       res.render('shop/index', {
-        products,
+        prods: products,
         pageTitle: 'Shop',
         path: '/',
+        isAuthenticated: req.session.isLoggedIn,
       });
     })
     .catch((err) => {
@@ -52,6 +55,7 @@ exports.getCart = (req, res, next) => {
         products,
         pageTitle: 'Your Cart',
         path: '/cart',
+        isAuthenticated: req.session.isLoggedIn,
       });
     })
     .catch((err) => console.log(err));
@@ -79,18 +83,6 @@ exports.postCartDeleteProduct = (req, res, next) => {
     .catch((err) => console.log(err));
 };
 
-exports.getOrders = (req, res, next) => {
-  Order.find({ 'user.userId': req.user._id })
-    .then((orders) => {
-      res.render('shop/orders', {
-        orders,
-        pageTitle: 'Your Orders',
-        path: '/orders',
-      });
-    })
-    .catch((err) => console.log(err));
-};
-
 exports.postOrder = (req, res, next) => {
   req.user
     .populate('cart.items.productId')
@@ -112,6 +104,19 @@ exports.postOrder = (req, res, next) => {
     })
     .then(() => {
       res.redirect('/orders');
+    })
+    .catch((err) => console.log(err));
+};
+
+exports.getOrders = (req, res, next) => {
+  Order.find({ 'user.userId': req.user._id })
+    .then((orders) => {
+      res.render('shop/orders', {
+        orders,
+        pageTitle: 'Your Orders',
+        path: '/orders',
+        isAuthenticated: req.session.isLoggedIn,
+      });
     })
     .catch((err) => console.log(err));
 };
