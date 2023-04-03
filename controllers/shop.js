@@ -33,7 +33,6 @@ exports.getProduct = (req, res, next) => {
 exports.getIndex = (req, res, next) => {
   Product.find()
     .then((products) => {
-      // console.log(products);
       res.render('shop/index', {
         prods: products,
         pageTitle: 'Shop',
@@ -92,7 +91,7 @@ exports.postOrder = (req, res, next) => {
       });
       const order = new Order({
         user: {
-          name: req.user.name,
+          email: req.user.email,
           userId: req.user,
         },
         products: products,

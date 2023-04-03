@@ -18,4 +18,6 @@
 
 ### 🔸 Sessions & Cookies
 
+### 🔸 Adding Authentication
+
 ---
