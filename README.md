@@ -20,4 +20,6 @@
 
 ### 🔸 Adding Authentication
 
+### 🔸 Sending Emails
+
 ---
