@@ -22,4 +22,6 @@
 
 ### 🔸 Sending Emails
 
+### 🔸 Advanced Authentication
+
 ---
