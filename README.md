@@ -26,4 +26,6 @@
 
 ### 🔸 Understanding Validation
 
+### 🔸 Error Handling
+
 ---

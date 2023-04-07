@@ -24,13 +24,13 @@ exports.getLogin = (req, res, next) => {
   res.render('auth/login', {
     pageTitle: 'Login',
     path: '/login',
-    isAuthenticated: false,
     errorMessage: message,
     oldInput: {
       email: '',
       password: '',
     },
     validationErrors: [],
+    isAuthenticated: false,
   });
 };
 
@@ -44,7 +44,6 @@ exports.getSignup = (req, res, next) => {
   res.render('auth/signup', {
     pageTitle: 'Signup',
     path: '/signup',
-    isAuthenticated: false,
     errorMessage: message,
     oldInput: {
       email: '',
@@ -52,6 +51,7 @@ exports.getSignup = (req, res, next) => {
       confirmPassword: '',
     },
     validationErrors: [],
+    isAuthenticated: false,
   });
 };
 
@@ -64,13 +64,13 @@ exports.postLogin = (req, res, next) => {
     return res.status(422).render('auth/login', {
       path: '/login',
       pageTitle: 'Login',
-      isAuthenticated: false,
       errorMessage: errors.array()[0].msg,
       oldInput: {
         email: email,
         password: password,
       },
       validationErrors: errors.array(),
+      isAuthenticated: false,
     });
   }
 
@@ -80,13 +80,13 @@ exports.postLogin = (req, res, next) => {
         return res.status(422).render('auth/login', {
           path: '/login',
           pageTitle: 'Login',
-          isAuthenticated: false,
           errorMessage: 'Invalid email or password.',
           oldInput: {
             email: email,
             password: password,
           },
           validationErrors: [],
+          isAuthenticated: false,
         });
       }
       bcrypt
@@ -112,9 +112,16 @@ exports.postLogin = (req, res, next) => {
             validationErrors: [],
           });
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          console.log(err);
+          res.redirect('/login');
+        });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
 };
 
 exports.postSignup = (req, res, next) => {
@@ -126,7 +133,6 @@ exports.postSignup = (req, res, next) => {
     return res.status(422).render('auth/signup', {
       pageTitle: 'Signup',
       path: '/signup',
-      isAuthenticated: false,
       errorMessage: errors.array()[0].msg,
       oldInput: {
         email: email,
@@ -134,6 +140,7 @@ exports.postSignup = (req, res, next) => {
         confirmPassword: req.body.confirmPassword,
       },
       validationErrors: errors.array(),
+      isAuthenticated: false,
     });
   }
 
@@ -157,7 +164,9 @@ exports.postSignup = (req, res, next) => {
       });
     })
     .catch((err) => {
-      console.log(err);
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
     });
 };
 
@@ -178,8 +187,8 @@ exports.getReset = (req, res, next) => {
   res.render('auth/reset', {
     pageTitle: 'Reset Password',
     path: '/reset',
-    isAuthenticated: false,
     errorMessage: message,
+    isAuthenticated: false,
   });
 };
 
@@ -198,24 +207,24 @@ exports.postReset = (req, res, next) => {
         }
         user.resetToken = token;
         user.resetTokenExpiration = Date.now() + 3600000;
-        return user
-          .save()
-          .then((result) => {
-            res.redirect('/');
-            transporter.sendMail({
-              to: req.body.email,
-              from: 'brsegh@gmail.com',
-              subject: 'Password Reset',
-              html: `
+        return user.save();
+      })
+      .then((result) => {
+        res.redirect('/');
+        transporter.sendMail({
+          to: req.body.email,
+          from: 'brsegh@gmail.com',
+          subject: 'Password Reset',
+          html: `
               <p>You requested a password reset.</p>
               <p>Click this <a href="http://localhost:3000/reset/${token}">link</a> to set a new password.</p>
             `,
-            });
-          })
-          .catch((err) => console.log(err));
+        });
       })
       .catch((err) => {
-        console.log(err);
+        const error = new Error(err);
+        error.httpStatusCode = 500;
+        return next(error);
       });
   });
 };
@@ -233,14 +242,16 @@ exports.getNewPassword = (req, res, next) => {
       res.render('auth/new-password', {
         pageTitle: 'New Password',
         path: '/new-password',
-        isAuthenticated: false,
         errorMessage: message,
         userId: user._id.toString(),
         passwordToken: token,
+        isAuthenticated: false,
       });
     })
     .catch((err) => {
-      console.log(err);
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
     });
 };
 
@@ -269,6 +280,8 @@ exports.postNewPassword = (req, res, next) => {
       res.redirect('/');
     })
     .catch((err) => {
-      console.log(err);
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
     });
 };
