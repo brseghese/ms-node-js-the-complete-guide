@@ -24,4 +24,6 @@
 
 ### 🔸 Advanced Authentication
 
+### 🔸 Understanding Validation
+
 ---
