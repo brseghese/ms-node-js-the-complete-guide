@@ -28,4 +28,6 @@
 
 ### 🔸 Error Handling
 
+### 🔸 File Upload & Download
+
 ---
