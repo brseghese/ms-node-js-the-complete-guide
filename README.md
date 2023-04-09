@@ -32,4 +32,6 @@
 
 ### 🔸 Adding Pagination
 
+### 🔸 Understanding Async Requests
+
 ---
